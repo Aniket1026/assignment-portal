@@ -5,12 +5,14 @@ import { assignmentRoutes } from "./src/routes/assignment.route";
 import dotenv from "dotenv";
 import cookieParser from "cookie-parser";
 
+// Load environment variables from .env file
 dotenv.config();
 
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
 
+// Connect to MongoDB
 mongoose
   .connect(
     process.env.MONGODB_URI
@@ -22,6 +24,8 @@ app.use("/api/v1", authRoutes);
 app.use("/api/v1", assignmentRoutes);
 
 const PORT = process.env.PORT;
+
+// Start the server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}......`);
 });

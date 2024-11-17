@@ -2,10 +2,13 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import { User } from "../models/user.model";
 
+// Define a new interface AuthRequest that extends the Request interface
 export interface AuthRequest extends Request {
   user?: any;
 }
 
+
+// Inside the auth function, we try to get the token from the cookies in the request
 export const auth = async (
   req: AuthRequest,
   res: Response,
@@ -33,6 +36,7 @@ export const auth = async (
   }
 };
 
+// Inside adminAuth the function, we try to check if the user role is admin
 export const adminAuth = async (
   req: AuthRequest,
   res: Response,
@@ -48,6 +52,7 @@ export const adminAuth = async (
   }
 };
 
+// Inside userAuth the function, we try to check if the user role is user
 export const userAuth = async(
   req: AuthRequest,
   res: Response,

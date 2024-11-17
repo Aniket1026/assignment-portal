@@ -6,6 +6,7 @@ import { Request, Response } from "express";
 
 const router = express.Router();
 
+// Register route to create a new user or admin
 router.post(
   "/register",
   [
@@ -48,6 +49,8 @@ router.post(
   }
 );
 
+
+// Login route to authenticate the user or admin
 router.post(
   "/login",
   [
@@ -84,6 +87,8 @@ router.post(
   }
 );
 
+
+// Logout route to clear the cookie and log out the user or admin
 router.post("/logout", async (req: Request, res: Response): Promise<void> => {
   try {
     res.clearCookie("token");

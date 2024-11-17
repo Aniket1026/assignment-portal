@@ -6,6 +6,7 @@ import { body, validationResult } from "express-validator";
 
 const router = express.Router();
 
+// Get all admins route for user role
 router.get("/admins", auth,userAuth, async (req, res) => {
   try {
     const admins = await User.find({ role: "admin" }, { password: 0 });
@@ -15,9 +16,10 @@ router.get("/admins", auth,userAuth, async (req, res) => {
   }
 });
 
+// Upload assignment route for user role
 router.post(
   "/upload",
-  [auth, body("task").isString().trim().notEmpty(), body("admin").isString().trim().notEmpty()],
+  [auth,userAuth,body("task").isString().trim().notEmpty(), body("admin").isString().trim().notEmpty()],
   async (req: AuthRequest, res) => {
     try {
       const errors = validationResult(req);
@@ -40,6 +42,7 @@ router.post(
 );
 
 
+// Get all assignments route for admin role
 router.get("/assignments", [auth, adminAuth], async (req: AuthRequest, res) => {
   try {
     const assignments = await Assignment.find({ admin: req.user.username })
@@ -50,6 +53,8 @@ router.get("/assignments", [auth, adminAuth], async (req: AuthRequest, res) => {
   }
 });
 
+
+// Accept assignment route for admin role
 router.post(
   "/assignments/:id/accept",
   [auth, adminAuth],
@@ -73,6 +78,7 @@ router.post(
   }
 );
 
+// Reject assignment route for admin role
 router.post(
   "/assignments/:id/reject",
   [auth, adminAuth],
